@@ -57,6 +57,12 @@ imputed_data = model.impute(test_data, max_length=200)
 ```
 
 
+### Sampling and imputing from Variable Row-numbers Under One Cluster (VRUOC)
+For example, the locations of all housings in the Californian table are geographically clusterable.
+A cluster can be viewed a geographical unit, or even a county.
+Therefore, a possible scenario occurs that requires sampling and conditional inputing in real life can be: how can I the number of housing at sales in a county? how is the current market distributed among the geomgraphy of california? sort of things like that.
+
+If you're interested in such scenario (which I am at, too), please go to examples/Example_California_Housing_VRUON.ipynb.
 
 ## GReaT Citation 
 
