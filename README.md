@@ -59,13 +59,18 @@ imputed_data = model.impute(test_data, max_length=200)
 
 ### Sampling and imputing from Variable Row-numbers Under One Cluster (VRUOC)
 For example, the locations of all housings in the Californian table are geographically clusterable.
-A cluster can be viewed a geographical unit, or even a county.
-Therefore, a possible scenario occurs that requires sampling and conditional inputing in real life can be: how can I the number of housing at sales in a county? how is the current market distributed among the geomgraphy of california? sort of things like that.
+A `cluster` can be viewed a geographical unit, or even a county.
+Therefore, a possible scenario occurs that requires sampling and conditional imputing in real life can be: **how can I know the number of housing at sales in a county? how is the current market distributed in the measure of the geomgraphy of california?** ...
+In this repo, I set `cluster_string` to the indicator of cluster in the dimension of geographical distance.
+Also, I append columns e.g. `cluster_string_count` to indicate the total amount of a value of `cluster_string`, and `cluster_string_index` to indicate sequential informatio to the game.
 
-If you're interested in such scenario (which I am at, too), please go to examples/Example_California_Housing_VRUON.ipynb.
+This section I do the following 2 tasks:
+- test if the configuration for VRUOC scenario tackles the challenge of `counts` and `index` in clustering issue. (cf.`examples/cal_dataframe_area_clusters_in_letters_counted_indexed.csv`).
+- if given a cluster_stirng with total amounts of its items, can it return correctly with index column？
+
+If you're interested in such scenario (which I is in, too), please go to examples/Example_California_Housing_VRUON.ipynb.
 
 ## GReaT Citation 
-
 If you use GReaT, please link or cite our work:
 
 ``` bibtex

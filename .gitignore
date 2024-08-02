@@ -10,7 +10,6 @@ examples/iris*
 examples/trainer_*
 
 .DS_Store
-CaliforniaHousing/
 
 dist/
 be_great.egg-info/

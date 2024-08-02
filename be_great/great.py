@@ -12,7 +12,8 @@ from tqdm import tqdm
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 
-from be_great.great_dataset import GReaTDataset, GReaTDataCollator, GReaTDatasetVRUOC
+# from be_great.great_dataset import GReaTDataset, GReaTDataCollator, GReaTDatasetVRUOC
+from be_great.great_dataset import GReaTDataset, GReaTDataCollator
 from be_great.great_start import (
     GReaTStart,
     CategoricalStart,
@@ -175,55 +176,55 @@ class GReaT:
         great_trainer.train(resume_from_checkpoint=resume_from_checkpoint)
         return great_trainer
 
-    def fit_VRUOC(
-        self,
-        data: tp.Union[pd.DataFrame, np.ndarray],
-        column_names: tp.Optional[tp.List[str]] = None,
-        conditional_col: tp.Optional[str] = None,
-        resume_from_checkpoint: tp.Union[bool, str] = False,
-        *,
-        cluster: tp.Optional[str] = None,
-    )-> GReaTTrainer:
-        """Fine-tune GReaT using tabular data, with concerns of VRUOC.
+    # def fit_VRUOC(
+    #     self,
+    #     data: tp.Union[pd.DataFrame, np.ndarray],
+    #     column_names: tp.Optional[tp.List[str]] = None,
+    #     conditional_col: tp.Optional[str] = None,
+    #     resume_from_checkpoint: tp.Union[bool, str] = False,
+    #     *,
+    #     cluster: tp.Optional[str] = None,
+    # )-> GReaTTrainer:
+    #     """Fine-tune GReaT using tabular data, with concerns of VRUOC.
 
-        Args:
-            data: Pandas DataFrame or Numpy Array that contains the tabular data
-            column_names: If data is Numpy Array, the feature names have to be defined. If data is Pandas DataFrame, the value is ignored
-            conditional_col: If given, the distribution of this column is saved and used as a starting point for the generation process later. If None, the last column is considered as conditional feature
-            resume_from_checkpoint: If True, resumes training from the latest checkpoint in the experiment_dir. If path, resumes the training from the given checkpoint (has to be a valid HuggingFace checkpoint!)
-            cluster: the assigned name for the main chain in VRUOC scenario
-        Returns:
-            GReaTTrainer used for the fine-tuning process
-        """
-        df = _array_to_dataframe(data, columns=column_names)
-        self._update_column_information(df)
-        self._update_conditional_information(df, conditional_col)
+    #     Args:
+    #         data: Pandas DataFrame or Numpy Array that contains the tabular data
+    #         column_names: If data is Numpy Array, the feature names have to be defined. If data is Pandas DataFrame, the value is ignored
+    #         conditional_col: If given, the distribution of this column is saved and used as a starting point for the generation process later. If None, the last column is considered as conditional feature
+    #         resume_from_checkpoint: If True, resumes training from the latest checkpoint in the experiment_dir. If path, resumes the training from the given checkpoint (has to be a valid HuggingFace checkpoint!)
+    #         cluster: the assigned name for the main chain in VRUOC scenario
+    #     Returns:
+    #         GReaTTrainer used for the fine-tuning process
+    #     """
+    #     df = _array_to_dataframe(data, columns=column_names)
+    #     self._update_column_information(df)
+    #     self._update_conditional_information(df, conditional_col)
 
-        # Convert DataFrame into HuggingFace dataset object
-        logging.info("Convert data into HuggingFace dataset object...")
-        great_ds = GReaTDatasetVRUOC.from_pandas(df)
-        great_ds.set_tokenizer(self.tokenizer)
+    #     # Convert DataFrame into HuggingFace dataset object
+    #     logging.info("Convert data into HuggingFace dataset object...")
+    #     great_ds = GReaTDatasetVRUOC.from_pandas(df)
+    #     great_ds.set_tokenizer(self.tokenizer)
 
-        # Set training hyperparameters
-        logging.info("Create GReaT Trainer...")
-        training_args = TrainingArguments(
-            self.experiment_dir,
-            num_train_epochs=self.epochs,
-            per_device_train_batch_size=self.batch_size,
-            **self.train_hyperparameters,
-        )
-        great_trainer = GReaTTrainer(
-            self.model,
-            training_args,
-            train_dataset=great_ds,
-            tokenizer=self.tokenizer,
-            data_collator=GReaTDataCollator(self.tokenizer),
-        )
+    #     # Set training hyperparameters
+    #     logging.info("Create GReaT Trainer...")
+    #     training_args = TrainingArguments(
+    #         self.experiment_dir,
+    #         num_train_epochs=self.epochs,
+    #         per_device_train_batch_size=self.batch_size,
+    #         **self.train_hyperparameters,
+    #     )
+    #     great_trainer = GReaTTrainer(
+    #         self.model,
+    #         training_args,
+    #         train_dataset=great_ds,
+    #         tokenizer=self.tokenizer,
+    #         data_collator=GReaTDataCollator(self.tokenizer),
+    #     )
 
-        # Start training
-        logging.info("Start training...")
-        great_trainer.train(resume_from_checkpoint=resume_from_checkpoint)
-        return great_trainer
+    #     # Start training
+    #     logging.info("Start training...")
+    #     great_trainer.train(resume_from_checkpoint=resume_from_checkpoint)
+    #     return great_trainer
 
 
 
