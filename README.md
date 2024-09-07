@@ -68,7 +68,7 @@ This section I do the following 2 tasks:
 - test if the configuration for VRUOC scenario tackles the challenge of `counts` and `index` in clustering issue. (cf.`examples/cal_dataframe_area_clusters_in_letters_counted_indexed.csv`).
 - if given a cluster_stirng with total amounts of its items, can it return correctly with index column？
 
-If you're interested in such scenario (which I is in, too), please go to examples/Example_California_Housing_VRUON.ipynb.
+If you're interested in such scenario (which I is in, too), please go to examples/Example_California_Housing_VRUOC.ipynb.
 
 ## GReaT Citation 
 If you use GReaT, please link or cite our work:
